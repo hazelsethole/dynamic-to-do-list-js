@@ -176,3 +176,35 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+JavaScript
+function addTask() {
+  const taskText = taskInput.value.trim();
+  if (!taskText) {
+    alert('Please enter a task!');
+    return;
+  }
+
+  // Get existing tasks from local storage (or initialize an empty array)
+  let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+  const listItem = document.createElement('li');
+  listItem.textContent = taskText;
+
+  const removeButton = document.createElement('button');
+  removeButton.textContent = 'Remove';
+  removeButton.classList.add('remove-btn');
+  removeButton.addEventListener('click', function() {
+    taskList.removeChild(listItem);
+    // Update local storage after removing task (optional)
+  });
+
+  listItem.appendChild(removeButton);
+  taskList.appendChild(listItem);
+
+  // Add the new task to the existing tasks list
+  tasks.push({ text: taskText });
+
+  // Update local storage with the complete list
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+
+  taskInput.value = '';
